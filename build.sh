@@ -39,10 +39,12 @@ run . ghcjs-pkg hide simple-affine-space     # Conflicts with vector-space
 run . ghcjs-pkg hide newtype                 # Replaced by newtype-generics
 run . ghcjs-pkg hide non-empty               # Conflicts with semialign
 run . ghcjs-pkg hide hgeometry-combinatorial # Conflicts with random-shuffle
+(. base.sh && ghcjs-pkg hide Cabal-2.4.0.1)
+(. base.sh && ghcjs-pkg hide cabal-doctest-1.0.7)
 
 # Check for duplicate modules.  Fail the build if so, since that's a
 # poor user experience.
-run . nodejs build/bin/find-dup-modules.jsexe/all.js \
+run . /usr/bin/node build/bin/find-dup-modules.jsexe/all.js \
              ~/.ghcjs/x86_64-linux-8.6.0.1-8.6.5/ghcjs/package.conf.d/package.cache
 
 run codeworld-base  cabal configure --ghcjs
@@ -76,7 +78,7 @@ run .  cabal_install --ghcjs ./funblocks-client
 # Build the CodeMirror JavaScript bundle.
 function build_codemirror {
   node_modules/uglify-js/bin/uglifyjs \
-      lib/codemirror.js \
+      codemirror-compressed.js \
       addon/dialog/dialog.js \
       addon/display/placeholder.js \
       addon/display/rulers.js \
